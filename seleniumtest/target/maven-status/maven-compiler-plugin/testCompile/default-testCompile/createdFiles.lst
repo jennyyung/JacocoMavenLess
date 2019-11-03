@@ -1,0 +1,4 @@
+exec/CalCategoriesTest.class
+jenny/page/BasePage.class
+jenny/testcase/TestLogin.class
+jenny/page/App.class
