@@ -173,7 +173,7 @@ public class EnterpriseApplyPage extends BasePage{
         return this;
     }
 
-    public EnterpriseApplyPage contractForServiceCompany(){
+    public EnterpriseApplyPage contractForServiceCompany(String serviceCompany){
         System.out.println("选择落地:");
         forceWait();
         WebElement addBut = this.findElement(By.cssSelector(".el-button.el-button--primary.el-button--small"));
@@ -185,11 +185,40 @@ public class EnterpriseApplyPage extends BasePage{
        // WebElement input = this.findElement(By.cssSelector("div.el-form-item__content > div.el-select input"));
        // input.sendKeys("攻城狮");
 
-        WebElement  serviceCompany = this.findElement(By.cssSelector("ul.el-scrollbar__view.el-select-dropdown__list > li:nth-child(1)"));
-        serviceCompany.click();
+        //WebElement  serviceCompany = this.findElement(By.cssSelector("ul.el-scrollbar__view.el-select-dropdown__list > li:nth-child(1)"));
+        //serviceCompany.click();
+        List<WebElement> serviceCompanyList = this.findElements(By.cssSelector("ul.el-scrollbar__view.el-select-dropdown__list > li"));
+        serviceCompanyList.forEach(sc -> {
+            if(sc.getText().equals(serviceCompany)){
+                sc.click();
+                return;
+            }
+        });
         forceWait();
         WebElement selectBut = this.findElement(By.cssSelector("div.el-form-item__content > .el-button.el-button--primary"));
         selectBut.click();
+
+        forceWait(2000);
+        WebElement contracts0goodsId =  this.findElement(By.cssSelector("label[for='contracts.0.goodsId'] + div > div"));
+        contracts0goodsId.click();
+
+        WebElement contracts0settleType =  this.findElement(By.cssSelector("label[for='contracts.0.settleType'] + div > div"));
+        contracts0settleType.click();
+
+        List<WebElement> contracts0goodsIdList = this.findElements(By.cssSelector("ul.el-scrollbar__view.el-select-dropdown__list > li"));
+        contracts0goodsIdList.forEach(gid -> {
+            if(gid.getText().equals("方案一")) {
+                gid.click();
+                return;
+            }
+        });
+
+        contracts0goodsIdList.forEach(gid -> {
+            if(gid.getText().equals("日结")) {
+                gid.click();
+                return;
+            }
+        });
 
         //WebElement nextBut = this.findElement(By.cssSelector(".el-button--success"));
         //nextBut.click();
