@@ -201,24 +201,54 @@ public class EnterpriseApplyPage extends BasePage{
         forceWait(2000);
         WebElement contracts0goodsId =  this.findElement(By.cssSelector("label[for='contracts.0.goodsId'] + div > div"));
         contracts0goodsId.click();
-
-        WebElement contracts0settleType =  this.findElement(By.cssSelector("label[for='contracts.0.settleType'] + div > div"));
-        contracts0settleType.click();
-
         List<WebElement> contracts0goodsIdList = this.findElements(By.cssSelector("ul.el-scrollbar__view.el-select-dropdown__list > li"));
         contracts0goodsIdList.forEach(gid -> {
-            if(gid.getText().equals("方案一")) {
+            if(gid.getText().equals("test2")) {
+                System.out.println("业务方案");
                 gid.click();
                 return;
             }
         });
+        WebElement contracts0settleType =  this.findElement(By.cssSelector("label[for='contracts.0.settleType'] + div > div"));
+        contracts0settleType.click();
 
-        contracts0goodsIdList.forEach(gid -> {
+        List<WebElement> contracts0settleTypeList = this.findElements(By.cssSelector("ul.el-scrollbar__view.el-select-dropdown__list > li"));
+
+        contracts0settleTypeList.forEach(gid -> {
             if(gid.getText().equals("日结")) {
                 gid.click();
                 return;
             }
         });
+
+
+        List<WebElement> contracts0channelTypeList =  this.findElements(By.cssSelector("label[for='contracts.0.channelTypeList'] + div > div > label"));
+        contracts0channelTypeList.forEach((type -> {
+            if("银行".equals(type.getText())){
+                System.out.println("选择银行卡");
+                type.click();
+                return;
+            }
+        }));
+
+        List<WebElement> feeList = this.findElements(By.cssSelector("label[for='contracts[0].serviceFeeContent.fixFee'] + div > div"));
+
+        feeList.forEach(fee -> {
+            WebElement feeType = fee.findElement(By.cssSelector("div > div"));
+            if(feeType.getText().contains("固定比例收费")){
+                System.out.println("选择实发金额");
+                fee.findElement(By.cssSelector("input[type='text']")).sendKeys("10");
+            }
+
+        });
+
+
+        List<WebElement> contracts0serviceTypeList =  this.findElements(By.cssSelector("label[for='contracts.0.serviceTypeList'] + div > div > label"));
+        for(WebElement ele : contracts0serviceTypeList){
+            if(ele.getText().equals("旅游服务") || ele.getText().equals("咨询")){
+                ele.click();
+            }
+        }
 
         //WebElement nextBut = this.findElement(By.cssSelector(".el-button--success"));
         //nextBut.click();
