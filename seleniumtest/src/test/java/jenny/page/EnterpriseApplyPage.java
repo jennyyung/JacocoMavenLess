@@ -250,8 +250,36 @@ public class EnterpriseApplyPage extends BasePage{
             }
         }
 
-        //WebElement nextBut = this.findElement(By.cssSelector(".el-button--success"));
-        //nextBut.click();
+
+        List<WebElement> servicePosList = this.findElements(By.cssSelector("table.post-table > tr > td > button")); //label[for='contracts[0].servicePosList'] + div > div > table.post-table > tr > td > button
+        servicePosList.forEach( servicePos -> {
+            if(servicePos.getText().equals("添加岗位")){
+                System.out.print("添加岗位");
+                servicePos.click();
+                WebElement posName = this.findElement(By.cssSelector("label[for='posName'] + div > div > input"));
+                posName.sendKeys("旅游,岗位名称");
+                WebElement description = this.findElement(By.cssSelector("label[for='description'] + div > div > textarea"));
+                description.sendKeys("岗位描述");
+                WebElement performance = this.findElement(By.cssSelector("label[for='performance'] + div > div > textarea"));
+                performance.sendKeys("绩效规则");
+                WebElement saveButton = this.findElement(By.cssSelector("div.el-dialog__footer > div > button.el-button.el-button--primary.el-button--small"));
+                saveButton.click();
+                forceWait(1000);
+            }
+        });
+
+        WebElement nextBut = this.findElement(By.cssSelector(".el-button--success"));
+        nextBut.click();
+        return this;
+    }
+
+    public EnterpriseApplyPage contractForAttacth() {
+        System.out.println("选择合同附加条款:");
+        forceWait(1000);
+        List<WebElement> payAndInvoiceSameList = this.findElements(By.cssSelector("label[for='payAndInvoiceSame'] + div > div > div[role='radiogroup'] > label"));
+        payAndInvoiceSameList.get(0).click();
+        WebElement nextBut = this.findElement(By.cssSelector(".el-button--success"));
+        nextBut.click();
         return this;
     }
 
