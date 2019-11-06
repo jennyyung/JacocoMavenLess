@@ -10,8 +10,27 @@ import java.util.List;
  */
 public class EnterpriseApplyPage extends BasePage{
 
-    public EnterpriseApplyPage addContract(){
+    WebElement addContractButton;
+    WebElement supplementContractButton;
+    WebElement changeContractButton;
+
+    public EnterpriseApplyPage() {
         forceWait();
+        List<WebElement> buttons = this.findElements(By.tagName("button"),10);
+        System.out.println("构造企业入驻页面");
+        for(WebElement button : buttons){
+            if("创建合同".equals(button.getText())){
+                addContractButton = button;
+            }else if("补签合同".equals(button.getText())){
+                supplementContractButton = button;
+            }else if("合同变更".equals(button.getText())){
+                changeContractButton = button;
+            }
+        }
+    }
+
+    public EnterpriseApplyPage addContract(){
+       /* forceWait();
         List<WebElement> buttons = this.findElements(By.tagName("button"),10);
         System.out.println("buttons size:"+buttons.size());
         for(WebElement button : buttons){
@@ -19,21 +38,23 @@ public class EnterpriseApplyPage extends BasePage{
                 button.click();
                 break;
             }
-        }
+        }*/
+        addContractButton.click();
         return this;
     }
 
     public void supplementContract(){
+        supplementContractButton.click();
 
     }
 
     public void changeContract(){
-
+        changeContractButton.click();
     }
 
     public EnterpriseApplyPage contractForSaleInfo(){
         System.out.println("销售信息:");
-        this.forceWait(1500);
+        forceWait();
         List<WebElement> allInputs = this.findElements(By.tagName("input"),10);
         System.out.println("inputs size:"+allInputs.size());
         for(WebElement inputEle : allInputs){
@@ -119,8 +140,7 @@ public class EnterpriseApplyPage extends BasePage{
     public EnterpriseApplyPage contractForCompanyInfo(String customNatureType){
         System.out.println("企业合同:");
         forceWait();
-
-        List<WebElement> customNatureLabels =  this.findElements(By.cssSelector("label[for=customNature] + div > label"),10);
+        List<WebElement> customNatureLabels =  this.findElements(By.cssSelector("label[for=customNature] + div > label"));
         // WebElement customNature =  this.findElement(By.cssSelector("label[for=customNature] + div input[value='20']")); 可以直接定位到元素,但不可点击
 //        WebElement label = customNatureLabels.get(0).findElement(By.cssSelector("input[value='20']"));
         customNatureLabels.get(0).click();
@@ -279,6 +299,27 @@ public class EnterpriseApplyPage extends BasePage{
         List<WebElement> payAndInvoiceSameList = this.findElements(By.cssSelector("label[for='payAndInvoiceSame'] + div > div > div[role='radiogroup'] > label"));
         payAndInvoiceSameList.get(0).click();
         WebElement nextBut = this.findElement(By.cssSelector(".el-button--success"));
+        nextBut.click();
+        return this;
+    }
+
+    public EnterpriseApplyPage contractForEsign() {
+        System.out.println("C端签约设置:");
+        forceWait(1000);
+        List<WebElement> isFromOutAppRadio = this.findElements(By.cssSelector("label[for='isFromOutApp'] + div > label"));
+        isFromOutAppRadio.forEach(radio -> {
+            if(radio.getText().equals("是")){
+                radio.click();
+            }
+        });
+        List<WebElement> jobMatchRadio = this.findElements(By.cssSelector("label[for='jobMatch'] + div > div > label"));
+        jobMatchRadio.forEach(radio -> {
+            if(radio.getText().equals("否")){
+                radio.click();
+            }
+        });
+
+        WebElement nextBut = this.findElement(By.cssSelector(".el-button.el-button--primary"));
         nextBut.click();
         return this;
     }
