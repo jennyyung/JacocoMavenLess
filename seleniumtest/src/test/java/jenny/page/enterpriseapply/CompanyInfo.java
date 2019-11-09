@@ -45,6 +45,7 @@ public class CompanyInfo extends BasePage {
             text.sendKeys("123");
         });
 
+        customerNameText.clear();
         customerNameText.sendKeys(customerName);
         customCollectorPhoneText.sendKeys(customCollectorPhone);
         customMail1Text.sendKeys(customMail);

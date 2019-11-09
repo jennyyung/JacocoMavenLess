@@ -20,6 +20,7 @@ public class BasePage {
     }
 
     public List<WebElement> findElements(By by){
+        System.out.println(by);
         return driver.findElements(by);
     }
 
